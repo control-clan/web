@@ -1,0 +1,31 @@
+---
+interface Props {
+  name: string;
+  tagline: string;
+  cover: string;
+}
+
+const { name, tagline, cover } = Astro.props;
+---
+
+<article class="group relative overflow-hidden border border-border-subtle bg-surface transition-all hover:border-accent-tactical">
+  <div class="relative aspect-[16/10] overflow-hidden bg-elevated">
+    <div
+      class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
+      style={`background-image: url('${cover}')`}
+      aria-hidden="true"
+    >
+    </div>
+    <div class="absolute inset-0 bg-gradient-to-t from-surface via-surface/40 to-transparent"></div>
+    <span class="absolute left-4 top-4 font-mono text-xs uppercase tracking-widest text-accent-tactical bracket-label">
+      Operação
+    </span>
+  </div>
+  <div class="flex flex-col gap-2 p-6">
+    <h3 class="text-2xl text-text-primary">{name}</h3>
+    <p class="text-sm text-text-secondary">{tagline}</p>
+    <p class="mt-2 text-sm leading-relaxed text-text-secondary">
+      <slot />
+    </p>
+  </div>
+</article>

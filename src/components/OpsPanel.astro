@@ -1,0 +1,35 @@
+---
+const stats = [
+  { code: '01', label: 'Operações ativas', value: 'SQUAD · ARMA 3' },
+  { code: '02', label: 'Postura', value: 'CONVITE + PROVA' },
+  { code: '03', label: 'Comunicação', value: 'DISCORD · TS3' },
+  { code: '04', label: 'Tempo de operação', value: 'CONTÍNUO' },
+];
+---
+
+<section class="relative border border-border-subtle bg-surface">
+  <div class="border-b border-border-subtle px-6 py-3 flex items-center justify-between">
+    <span class="font-mono text-[10px] uppercase tracking-[0.4em] text-accent-tactical bracket-label">
+      Status
+    </span>
+    <span class="flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-text-muted">
+      <span class="inline-block h-2 w-2 animate-pulse rounded-full bg-accent-tactical"></span>
+      Em operação
+    </span>
+  </div>
+  <div class="grid grid-cols-2 gap-px bg-border-subtle md:grid-cols-4">
+    {
+      stats.map((s) => (
+        <div class="flex flex-col gap-2 bg-surface p-6">
+          <span class="font-mono text-[10px] text-text-muted">{`// ${s.code}`}</span>
+          <span class="font-mono text-[10px] uppercase tracking-widest text-text-secondary">
+            {s.label}
+          </span>
+          <span class="font-display text-lg font-semibold uppercase tracking-wide text-text-primary">
+            {s.value}
+          </span>
+        </div>
+      ))
+    }
+  </div>
+</section>

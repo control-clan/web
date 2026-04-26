@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://control-clan.github.io/web/sitemap-index.xml

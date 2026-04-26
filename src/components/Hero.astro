@@ -1,0 +1,105 @@
+---
+interface VideoBackground {
+  src: string;
+  poster: string;
+}
+
+interface Props {
+  variant?: 'home' | 'page';
+  eyebrow?: string;
+  title: string;
+  subtitle?: string;
+  background?: string;
+  video?: VideoBackground;
+  overlayClass?: string;
+}
+
+const {
+  variant = 'page',
+  eyebrow,
+  title,
+  subtitle,
+  background,
+  video,
+  overlayClass = 'bg-base/70',
+} = Astro.props;
+const isHome = variant === 'home';
+const heightClass = isHome ? 'min-h-[88vh]' : 'min-h-[40vh]';
+---
+
+<section
+  class={`relative flex ${heightClass} items-center overflow-hidden border-b border-border-subtle`}
+>
+  {
+    video && (
+      <div class="absolute inset-0">
+        <video
+          class="h-full w-full object-cover"
+          src={video.src}
+          poster={video.poster}
+          autoplay
+          muted
+          loop
+          playsinline
+          preload="metadata"
+          aria-hidden="true"
+        />
+        <div class={`absolute inset-0 ${overlayClass}`}></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-base via-base/40 to-base/20"></div>
+      </div>
+    )
+  }
+  {
+    !video && background && (
+      <div class="absolute inset-0">
+        <div
+          class="absolute inset-0 bg-cover bg-center"
+          style={`background-image: url('${background}')`}
+          aria-hidden="true"
+        >
+        </div>
+        <div class={`absolute inset-0 ${overlayClass}`}></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-base via-base/50 to-base/30"></div>
+      </div>
+    )
+  }
+  <div class="grid-tactical-bg absolute inset-0 opacity-20"></div>
+
+  <div class="relative z-10 mx-auto w-full max-w-6xl px-6">
+    {
+      eyebrow && (
+        <span class="font-mono text-xs uppercase tracking-[0.4em] text-accent-tactical bracket-label">
+          {eyebrow}
+        </span>
+      )
+    }
+    <h1
+      class={`mt-4 ${isHome ? 'text-5xl md:text-7xl lg:text-8xl' : 'text-4xl md:text-6xl'} leading-[0.95] text-text-primary`}
+    >
+      {title}
+    </h1>
+    {
+      subtitle && (
+        <p class="mt-6 max-w-2xl text-base md:text-lg leading-relaxed text-text-secondary">
+          {subtitle}
+        </p>
+      )
+    }
+    {
+      isHome && (
+        <div class="mt-10 flex flex-wrap gap-4">
+          <slot name="actions" />
+        </div>
+      )
+    }
+  </div>
+
+  {
+    isHome && (
+      <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-text-muted">
+        <span class="font-mono text-[10px] uppercase tracking-[0.3em]">Avançar</span>
+        <div class="h-8 w-px bg-accent-tactical/60 animate-pulse"></div>
+      </div>
+    )
+  }
+</section>

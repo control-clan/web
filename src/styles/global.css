@@ -1,0 +1,81 @@
+@import 'tailwindcss';
+
+@import '@fontsource/rajdhani/600.css';
+@import '@fontsource/rajdhani/700.css';
+@import '@fontsource/inter/400.css';
+@import '@fontsource/inter/500.css';
+@import '@fontsource/inter/600.css';
+@import '@fontsource/jetbrains-mono/400.css';
+@import '@fontsource/jetbrains-mono/500.css';
+
+@theme {
+  --color-base: #0a0d10;
+  --color-surface: #141a1f;
+  --color-elevated: #1c2329;
+  --color-border-subtle: #232a30;
+
+  --color-text-primary: #e6e8eb;
+  --color-text-secondary: #9ca3af;
+  --color-text-muted: #6b7280;
+
+  --color-accent-tactical: #8fad3a;
+  --color-accent-tactical-dim: #6e8a22;
+  --color-accent-alert: #d97706;
+
+  --font-display: 'Rajdhani', system-ui, sans-serif;
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  --radius-sharp: 2px;
+}
+
+@layer base {
+  html {
+    background-color: var(--color-base);
+    color: var(--color-text-primary);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    min-height: 100dvh;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+  }
+
+  ::selection {
+    background-color: var(--color-accent-tactical);
+    color: var(--color-base);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent-tactical);
+    outline-offset: 2px;
+  }
+}
+
+@layer utilities {
+  .bracket-label::before { content: '['; color: var(--color-accent-tactical); margin-right: 0.25em; }
+  .bracket-label::after  { content: ']'; color: var(--color-accent-tactical); margin-left: 0.25em; }
+
+  .grid-tactical-bg {
+    background-image:
+      linear-gradient(to right, color-mix(in srgb, var(--color-border-subtle) 60%, transparent) 1px, transparent 1px),
+      linear-gradient(to bottom, color-mix(in srgb, var(--color-border-subtle) 60%, transparent) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

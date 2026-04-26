@@ -1,0 +1,84 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import { site } from '../data/site';
+
+const channels = [
+  {
+    code: 'CH-01',
+    label: 'Discord',
+    desc: 'Sala de operações principal. Briefings, debriefs e comunicação geral.',
+    href: site.social.discord,
+    cta: 'Acessar servidor',
+  },
+  {
+    code: 'CH-02',
+    label: 'Instagram',
+    desc: 'Registros operacionais, divulgação e cobertura visual.',
+    href: site.social.instagram,
+    cta: 'Seguir',
+  },
+  {
+    code: 'CH-03',
+    label: 'YouTube',
+    desc: 'Vídeos de operações, debriefs e gameplay.',
+    href: site.social.youtube,
+    cta: 'Inscrever-se',
+  },
+  {
+    code: 'CH-04',
+    label: 'WhatsApp',
+    desc: 'Grupo paralelo para comunicação rápida e avisos.',
+    href: site.social.whatsapp,
+    cta: 'Entrar no grupo',
+  },
+];
+---
+
+<BaseLayout title="Contato">
+  <Hero
+    variant="page"
+    eyebrow="// Comunicação"
+    title="Contato"
+    subtitle="Para entrar no clã, use o Recrutamento. Para qualquer outro motivo, escolha um canal abaixo."
+  />
+
+  <section class="mx-auto max-w-6xl px-6 py-20">
+    <SectionHeader eyebrow="Canais" title="Pontos de comunicação" />
+    <div class="grid gap-px overflow-hidden border border-border-subtle bg-border-subtle md:grid-cols-2">
+      {
+        channels.map((c) => (
+          <a
+            href={c.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="group flex flex-col gap-3 bg-surface p-8 transition-colors hover:bg-elevated"
+          >
+            <span class="font-mono text-[10px] uppercase tracking-widest text-accent-tactical">
+              {c.code}
+            </span>
+            <h3 class="text-3xl text-text-primary transition-colors group-hover:text-accent-tactical">
+              {c.label}
+            </h3>
+            <p class="text-sm leading-relaxed text-text-secondary">{c.desc}</p>
+            <span class="mt-2 inline-flex items-center gap-2 font-display text-sm uppercase tracking-wider text-accent-tactical">
+              {c.cta} <span aria-hidden="true">→</span>
+            </span>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-3xl px-6 pb-20 text-center">
+    <SectionHeader align="center" eyebrow="Email direto" title="Para imprensa, parcerias e patrocínios" />
+    <a
+      href={`mailto:${site.social.email}`}
+      class="inline-flex items-center gap-3 border border-border-subtle bg-surface px-8 py-5 font-mono text-base text-text-primary transition-colors hover:border-accent-tactical hover:text-accent-tactical"
+    >
+      <span class="text-accent-tactical">{'>'}</span>
+      {site.social.email}
+    </a>
+  </section>
+</BaseLayout>
