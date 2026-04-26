@@ -1,0 +1,92 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import Button from '../components/Button.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import SectionDivider from '../components/SectionDivider.astro';
+import ValueCard from '../components/ValueCard.astro';
+import GameCard from '../components/GameCard.astro';
+import OpsPanel from '../components/OpsPanel.astro';
+import { site } from '../data/site';
+import { getIcon } from '../lib/icons';
+import { url } from '../lib/url';
+
+const values = (await getCollection('values')).sort((a, b) => a.data.order - b.data.order);
+const games = (await getCollection('games')).sort((a, b) => a.data.order - b.data.order);
+---
+
+<BaseLayout>
+  <Hero
+    variant="home"
+    eyebrow="Control Team"
+    title="ESTRATÉGIA. COORDENAÇÃO. CONTROLE."
+    subtitle={site.description}
+    video={{ src: url('/video/hero.mp4'), poster: url('/video/hero-poster.jpg') }}
+    overlayClass="bg-base/65"
+  >
+    <Button slot="actions" href={url('/recrutamento')} variant="primary" size="lg">
+      Iniciar Recrutamento
+    </Button>
+    <Button slot="actions" href={site.social.discord} variant="secondary" size="lg" external>
+      Acessar Discord
+    </Button>
+  </Hero>
+
+  <section class="mx-auto max-w-6xl px-6 py-20">
+    <SectionHeader eyebrow="Modus Operandi" title="Quatro princípios. Uma operação." />
+    <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+      {
+        values.map((v, i) => (
+          <ValueCard title={v.data.title} index={i + 1} iconSvg={getIcon(v.data.icon)}>
+            {v.body}
+          </ValueCard>
+        ))
+      }
+    </div>
+  </section>
+
+  <SectionDivider label="Operações" />
+
+  <section class="mx-auto max-w-6xl px-6 py-12">
+    <SectionHeader eyebrow="Frentes de combate" title="Jogos cobertos pelo clã" />
+    <div class="grid gap-6 md:grid-cols-2">
+      {
+        games.map((g) => (
+          <GameCard name={g.data.name} tagline={g.data.tagline} cover={url(g.data.cover)}>
+            {g.body}
+          </GameCard>
+        ))
+      }
+    </div>
+  </section>
+
+  <SectionDivider label="Status" />
+
+  <section class="mx-auto max-w-6xl px-6 py-12">
+    <SectionHeader eyebrow="Painel de Operações" title="Estado atual da unidade" />
+    <OpsPanel />
+  </section>
+
+  <section class="relative mt-20 border-y border-border-subtle bg-surface">
+    <div class="grid-tactical-bg absolute inset-0 opacity-20" aria-hidden="true"></div>
+    <div class="relative mx-auto flex max-w-4xl flex-col items-center gap-6 px-6 py-20 text-center">
+      <span class="font-mono text-xs uppercase tracking-[0.4em] text-accent-tactical bracket-label">
+        Recrutamento aberto
+      </span>
+      <h2 class="text-4xl md:text-6xl text-text-primary">
+        Pronto para operar com disciplina?
+      </h2>
+      <p class="max-w-2xl text-text-secondary">
+        Selecionamos por compromisso, não por quantidade. Se você busca jogabilidade séria,
+        comunicação eficiente e operações coordenadas, este é o seu posto.
+      </p>
+      <div class="mt-2 flex flex-wrap justify-center gap-4">
+        <Button href={url('/recrutamento')} variant="primary" size="lg">Iniciar Inscrição</Button>
+        <Button href={site.social.discord} variant="secondary" size="lg" external>
+          Conversar no Discord
+        </Button>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

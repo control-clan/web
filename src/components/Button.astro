@@ -1,0 +1,54 @@
+---
+type Variant = 'primary' | 'secondary' | 'ghost';
+type Size = 'md' | 'lg';
+
+interface Props {
+  href?: string;
+  type?: 'button' | 'submit';
+  variant?: Variant;
+  size?: Size;
+  external?: boolean;
+  class?: string;
+}
+
+const {
+  href,
+  type = 'button',
+  variant = 'primary',
+  size = 'md',
+  external = false,
+  class: className = '',
+} = Astro.props;
+
+const base =
+  'inline-flex items-center justify-center gap-2 font-display font-semibold uppercase tracking-wider transition-all duration-200 rounded-[2px] border';
+
+const variants: Record<Variant, string> = {
+  primary:
+    'bg-accent-tactical text-base border-accent-tactical hover:bg-accent-tactical-dim hover:border-accent-tactical-dim',
+  secondary:
+    'bg-transparent text-text-primary border-border-subtle hover:border-accent-tactical hover:text-accent-tactical',
+  ghost:
+    'bg-transparent text-text-secondary border-transparent hover:text-accent-tactical',
+};
+
+const sizes: Record<Size, string> = {
+  md: 'px-5 py-2.5 text-sm',
+  lg: 'px-7 py-3.5 text-base',
+};
+
+const classes = `${base} ${variants[variant]} ${sizes[size]} ${className}`;
+const externalAttrs = external ? { target: '_blank', rel: 'noopener noreferrer' } : {};
+---
+
+{
+  href ? (
+    <a href={href} class={classes} {...externalAttrs}>
+      <slot />
+    </a>
+  ) : (
+    <button type={type} class={classes}>
+      <slot />
+    </button>
+  )
+}

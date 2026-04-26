@@ -1,0 +1,208 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import SectionDivider from '../components/SectionDivider.astro';
+import Button from '../components/Button.astro';
+import { site } from '../data/site';
+import { url } from '../lib/url';
+
+const requirements = [
+  { code: 'REQ-01', label: 'Idade mínima', value: '16 anos' },
+  { code: 'REQ-02', label: 'Microfone funcional', value: 'Obrigatório' },
+  { code: 'REQ-03', label: 'Hardware', value: 'Squad/Arma 3 estáveis em config média' },
+  { code: 'REQ-04', label: 'Disponibilidade', value: 'Mín. 1 operação por semana' },
+  { code: 'REQ-05', label: 'Idioma', value: 'Português fluente' },
+  { code: 'REQ-06', label: 'Postura', value: 'Maduro, disciplinado e comunicativo' },
+];
+
+const process = [
+  { step: '01', title: 'Aplicação', desc: 'Preencha o formulário abaixo com seus dados e experiência.' },
+  { step: '02', title: 'Entrevista', desc: 'Conversa por voz no Discord com um membro do comando.' },
+  { step: '03', title: 'Operação de prova', desc: 'Participação em uma operação para avaliar postura e fit.' },
+  { step: '04', title: 'Decisão', desc: 'Avaliação coletiva do comando e ingresso oficial.' },
+];
+
+const faq = [
+  {
+    q: 'Posso ser membro de outro clã ao mesmo tempo?',
+    a: 'Não. Exigimos exclusividade nos jogos cobertos pelo Control para evitar conflito de operações.',
+  },
+  {
+    q: 'Quanto custa para fazer parte?',
+    a: 'Nada. O Control é uma comunidade não-comercial.',
+  },
+  {
+    q: 'Quais idades vocês aceitam?',
+    a: 'A partir de 16 anos. Maturidade pesa mais que idade — avaliamos caso a caso.',
+  },
+  {
+    q: 'Tenho pouca experiência em jogos táticos. Posso aplicar?',
+    a: 'Sim. O que pesa é a vontade de aprender e o respeito à doutrina do clã.',
+  },
+];
+---
+
+<BaseLayout title="Recrutamento">
+  <Hero
+    variant="page"
+    eyebrow="// Recrutamento aberto"
+    title="Junte-se ao Control"
+    subtitle="Quatro etapas, sem mistério. Selecionamos por compromisso, não por número."
+    background={url('/gallery/ops-005.webp')}
+  />
+
+  <section class="mx-auto max-w-6xl px-6 py-20">
+    <SectionHeader eyebrow="Pré-requisitos" title="O que esperamos do candidato" />
+    <ul class="grid gap-px overflow-hidden border border-border-subtle bg-border-subtle md:grid-cols-2 lg:grid-cols-3">
+      {
+        requirements.map((r) => (
+          <li class="flex flex-col gap-1 bg-surface p-5">
+            <span class="font-mono text-[10px] uppercase tracking-widest text-accent-tactical">
+              {r.code}
+            </span>
+            <span class="text-sm text-text-secondary">{r.label}</span>
+            <span class="font-display text-lg uppercase tracking-wide text-text-primary">
+              {r.value}
+            </span>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <SectionDivider label="Processo" />
+
+  <section class="mx-auto max-w-6xl px-6 py-12">
+    <SectionHeader eyebrow="Fluxo" title="Quatro etapas até o ingresso" />
+    <ol class="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+      {
+        process.map((p) => (
+          <li class="flex flex-col gap-3 border border-border-subtle bg-surface p-6">
+            <span class="font-display text-4xl font-bold text-accent-tactical">{p.step}</span>
+            <h3 class="text-xl text-text-primary">{p.title}</h3>
+            <p class="text-sm leading-relaxed text-text-secondary">{p.desc}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+
+  <SectionDivider label="Inscrição" />
+
+  <section class="mx-auto max-w-3xl px-6 py-12">
+    <SectionHeader eyebrow="Formulário" title="Aplicação oficial" />
+    <form
+      action={site.recruitForm.endpoint}
+      method="POST"
+      class="flex flex-col gap-5 border border-border-subtle bg-surface p-6 md:p-8"
+    >
+      <label class="flex flex-col gap-2">
+        <span class="font-mono text-[10px] uppercase tracking-widest text-accent-tactical">
+          // Nome de guerra
+        </span>
+        <input
+          type="text"
+          name="nickname"
+          required
+          class="border border-border-subtle bg-base px-4 py-3 text-text-primary outline-none transition-colors focus:border-accent-tactical"
+        />
+      </label>
+
+      <label class="flex flex-col gap-2">
+        <span class="font-mono text-[10px] uppercase tracking-widest text-accent-tactical">
+          // Idade
+        </span>
+        <input
+          type="number"
+          name="age"
+          min="16"
+          max="99"
+          required
+          class="border border-border-subtle bg-base px-4 py-3 text-text-primary outline-none transition-colors focus:border-accent-tactical"
+        />
+      </label>
+
+      <label class="flex flex-col gap-2">
+        <span class="font-mono text-[10px] uppercase tracking-widest text-accent-tactical">
+          // Discord (usuário)
+        </span>
+        <input
+          type="text"
+          name="discord"
+          required
+          class="border border-border-subtle bg-base px-4 py-3 text-text-primary outline-none transition-colors focus:border-accent-tactical"
+        />
+      </label>
+
+      <label class="flex flex-col gap-2">
+        <span class="font-mono text-[10px] uppercase tracking-widest text-accent-tactical">
+          // Jogo principal
+        </span>
+        <select
+          name="game"
+          required
+          class="border border-border-subtle bg-base px-4 py-3 text-text-primary outline-none transition-colors focus:border-accent-tactical"
+        >
+          <option value="">Selecione...</option>
+          <option value="squad">Squad</option>
+          <option value="arma3">Arma 3</option>
+          <option value="ambos">Ambos</option>
+        </select>
+      </label>
+
+      <label class="flex flex-col gap-2">
+        <span class="font-mono text-[10px] uppercase tracking-widest text-accent-tactical">
+          // Experiência tática (resumo)
+        </span>
+        <textarea
+          name="experience"
+          rows="5"
+          required
+          class="border border-border-subtle bg-base px-4 py-3 text-text-primary outline-none transition-colors focus:border-accent-tactical resize-y"
+        ></textarea>
+      </label>
+
+      <label class="flex flex-col gap-2">
+        <span class="font-mono text-[10px] uppercase tracking-widest text-accent-tactical">
+          // Por que o Control?
+        </span>
+        <textarea
+          name="motivation"
+          rows="4"
+          required
+          class="border border-border-subtle bg-base px-4 py-3 text-text-primary outline-none transition-colors focus:border-accent-tactical resize-y"
+        ></textarea>
+      </label>
+
+      <Button type="submit" variant="primary" size="lg">Enviar Aplicação</Button>
+
+      <p class="font-mono text-[10px] uppercase tracking-widest text-text-muted">
+        // Configurar endpoint Formspree em src/data/site.ts antes do deploy
+      </p>
+    </form>
+  </section>
+
+  <SectionDivider label="FAQ" />
+
+  <section class="mx-auto max-w-3xl px-6 py-12 pb-20">
+    <SectionHeader eyebrow="Dúvidas frequentes" title="Antes de aplicar" />
+    <div class="flex flex-col gap-3">
+      {
+        faq.map((item) => (
+          <details class="group border border-border-subtle bg-surface">
+            <summary class="flex cursor-pointer list-none items-center justify-between gap-4 p-5 font-display uppercase tracking-wide text-text-primary transition-colors hover:bg-elevated">
+              <span>{item.q}</span>
+              <span class="font-mono text-accent-tactical transition-transform group-open:rotate-45">
+                +
+              </span>
+            </summary>
+            <p class="border-t border-border-subtle p-5 text-sm leading-relaxed text-text-secondary">
+              {item.a}
+            </p>
+          </details>
+        ))
+      }
+    </div>
+  </section>
+</BaseLayout>

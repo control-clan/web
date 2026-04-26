@@ -1,0 +1,33 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/Button.astro';
+import { url } from '../lib/url';
+---
+
+<BaseLayout title="Operação não encontrada" noindex>
+  <section class="relative flex min-h-[80vh] items-center overflow-hidden">
+    <div class="grid-tactical-bg absolute inset-0 opacity-30" aria-hidden="true"></div>
+    <div class="relative mx-auto max-w-3xl px-6 text-center">
+      <span class="font-mono text-xs uppercase tracking-[0.4em] text-accent-tactical bracket-label">
+        Erro 404
+      </span>
+      <h1 class="mt-4 text-5xl md:text-7xl text-text-primary">
+        Operação não encontrada
+      </h1>
+      <p class="mt-6 text-lg text-text-secondary">
+        A coordenada que você buscou não consta no mapa. Retorne ao QG ou inicie o recrutamento.
+      </p>
+      <div class="mt-10 flex flex-wrap justify-center gap-4">
+        <Button href={url('/')} variant="primary" size="lg">Voltar ao QG</Button>
+        <Button href={url('/recrutamento')} variant="secondary" size="lg">Recrutamento</Button>
+      </div>
+      <pre class="mt-12 inline-block border border-border-subtle bg-surface p-4 text-left font-mono text-[10px] text-text-muted">
+{`> trace operation
+  status:    not_found
+  coord:     unknown
+  fallback:  /
+  next:      retry || abort`}
+      </pre>
+    </div>
+  </section>
+</BaseLayout>

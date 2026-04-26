@@ -1,0 +1,31 @@
+---
+interface Props {
+  title: string;
+  index: number;
+  iconSvg: string;
+}
+
+const { title, index, iconSvg } = Astro.props;
+const code = String(index).padStart(2, '0');
+---
+
+<article class="group relative flex flex-col gap-4 border border-border-subtle bg-surface p-6 transition-colors hover:border-accent-tactical">
+  <div class="flex items-center justify-between">
+    <span class="font-mono text-xs text-accent-tactical">{`// ${code}`}</span>
+    <Fragment set:html={iconSvg} />
+  </div>
+  <h3 class="text-xl text-text-primary">{title}</h3>
+  <p class="text-sm leading-relaxed text-text-secondary">
+    <slot />
+  </p>
+  <div class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-accent-tactical to-transparent opacity-0 transition-opacity group-hover:opacity-100"></div>
+</article>
+
+<style>
+  article :global(svg) {
+    width: 1.5rem;
+    height: 1.5rem;
+    color: var(--color-accent-tactical);
+    stroke-width: 1.5;
+  }
+</style>

@@ -1,0 +1,22 @@
+---
+interface Props {
+  eyebrow?: string;
+  title: string;
+  align?: 'left' | 'center';
+}
+
+const { eyebrow, title, align = 'left' } = Astro.props;
+const alignClass = align === 'center' ? 'text-center items-center' : 'text-left items-start';
+---
+
+<header class={`flex flex-col ${alignClass} gap-3 mb-12`}>
+  {
+    eyebrow && (
+      <span class="font-mono text-xs uppercase tracking-[0.3em] text-accent-tactical bracket-label">
+        {eyebrow}
+      </span>
+    )
+  }
+  <h2 class="text-3xl md:text-5xl text-text-primary">{title}</h2>
+  <div class="h-px w-16 bg-accent-tactical" aria-hidden="true"></div>
+</header>
