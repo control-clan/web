@@ -1,4 +1,6 @@
 ---
+import { url } from '../lib/url';
+
 interface VideoBackground {
   src: string;
   poster: string;
@@ -12,6 +14,8 @@ interface Props {
   background?: string;
   video?: VideoBackground;
   overlayClass?: string;
+  /** Se true, esconde o logo CTRL no hero (default false — logo aparece em TODAS as páginas). */
+  hideLogo?: boolean;
 }
 
 const {
@@ -22,13 +26,14 @@ const {
   background,
   video,
   overlayClass = 'bg-base/70',
+  hideLogo = false,
 } = Astro.props;
 const isHome = variant === 'home';
-const heightClass = isHome ? 'min-h-[88vh]' : 'min-h-[40vh]';
+const heightClass = isHome ? 'min-h-[88vh]' : 'min-h-[44vh]';
 ---
 
 <section
-  class={`relative flex ${heightClass} items-center overflow-hidden border-b border-border-subtle`}
+  class={`relative flex ${heightClass} items-center justify-center overflow-hidden border-b border-border-subtle text-center`}
 >
   {
     video && (
@@ -65,7 +70,18 @@ const heightClass = isHome ? 'min-h-[88vh]' : 'min-h-[40vh]';
   }
   <div class="grid-tactical-bg absolute inset-0 opacity-20"></div>
 
-  <div class="relative z-10 mx-auto w-full max-w-6xl px-6">
+  <div class="relative z-10 mx-auto flex w-full max-w-7xl flex-col items-center px-6">
+    {
+      !hideLogo && (
+        <img
+          src={url('/brand/logo-ctrl.webp')}
+          alt="Control Team"
+          width={isHome ? 160 : 96}
+          height={isHome ? 160 : 96}
+          class={`mb-6 ${isHome ? 'h-28 w-28 md:h-36 md:w-36 lg:h-40 lg:w-40' : 'h-16 w-16 md:h-20 md:w-20'} drop-shadow-[0_0_24px_rgba(140,198,63,0.35)]`}
+        />
+      )
+    }
     {
       eyebrow && (
         <span class="font-mono text-xs uppercase tracking-[0.4em] text-accent-tactical bracket-label">
@@ -74,7 +90,7 @@ const heightClass = isHome ? 'min-h-[88vh]' : 'min-h-[40vh]';
       )
     }
     <h1
-      class={`mt-4 ${isHome ? 'text-5xl md:text-7xl lg:text-8xl' : 'text-4xl md:text-6xl'} leading-[0.95] text-text-primary`}
+      class={`mt-4 leading-[0.95] text-text-primary whitespace-nowrap ${isHome ? 'hero-title-home' : 'hero-title-page'}`}
     >
       {title}
     </h1>
@@ -87,7 +103,7 @@ const heightClass = isHome ? 'min-h-[88vh]' : 'min-h-[40vh]';
     }
     {
       isHome && (
-        <div class="mt-10 flex flex-wrap gap-4">
+        <div class="mt-10 flex flex-wrap items-center justify-center gap-4">
           <slot name="actions" />
         </div>
       )
@@ -103,3 +119,29 @@ const heightClass = isHome ? 'min-h-[88vh]' : 'min-h-[40vh]';
     )
   }
 </section>
+
+<style>
+  /* Tipografia fluida — garante 1 linha em qualquer viewport sem overflow */
+  .hero-title-home {
+    font-family: var(--font-display);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.005em;
+    /* clamp(min, fluido, max) — escala com largura da viewport */
+    font-size: clamp(1.5rem, 6.6vw, 6rem);
+  }
+  .hero-title-page {
+    font-family: var(--font-display);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: clamp(1.75rem, 7vw, 4.5rem);
+  }
+
+  /* Em telas muito estreitas, permite quebra para evitar overflow horrendo */
+  @media (max-width: 360px) {
+    .hero-title-home, .hero-title-page {
+      white-space: normal;
+      font-size: clamp(1.25rem, 9vw, 2.25rem);
+    }
+  }
+</style>

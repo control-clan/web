@@ -7,20 +7,42 @@ import Button from '../components/Button.astro';
 import { site } from '../data/site';
 import { url } from '../lib/url';
 
+const formUrl = site.recruitForm.url;
+
 const requirements = [
-  { code: 'REQ-01', label: 'Idade mínima', value: '16 anos' },
+  { code: 'REQ-01', label: 'Idade mínima', value: '18 anos' },
   { code: 'REQ-02', label: 'Microfone funcional', value: 'Obrigatório' },
-  { code: 'REQ-03', label: 'Hardware', value: 'Squad/Arma 3 estáveis em config média' },
+  { code: 'REQ-03', label: 'WhatsApp + Steam', value: 'Preenchimento obrigatório no formulário' },
   { code: 'REQ-04', label: 'Disponibilidade', value: 'Mín. 1 operação por semana' },
   { code: 'REQ-05', label: 'Idioma', value: 'Português fluente' },
   { code: 'REQ-06', label: 'Postura', value: 'Maduro, disciplinado e comunicativo' },
 ];
 
 const process = [
-  { step: '01', title: 'Aplicação', desc: 'Preencha o formulário abaixo com seus dados e experiência.' },
-  { step: '02', title: 'Entrevista', desc: 'Conversa por voz no Discord com um membro do comando.' },
-  { step: '03', title: 'Operação de prova', desc: 'Participação em uma operação para avaliar postura e fit.' },
-  { step: '04', title: 'Decisão', desc: 'Avaliação coletiva do comando e ingresso oficial.' },
+  {
+    step: '01',
+    title: 'Aplicação',
+    desc:
+      'Preencha o formulário oficial do clã com todos os dados solicitados. WhatsApp e perfil da Steam são obrigatórios — serão usados para o agendamento da entrevista. Formulários incompletos não serão considerados.',
+  },
+  {
+    step: '02',
+    title: 'Entrevista',
+    desc:
+      'Pré-selecionados propõem horário para entrevista por voz com o líder do clã, [CTRL] Shimo. Dias de semana: após 19h30. Finais de semana: qualquer horário. A entrevista é obrigatória.',
+  },
+  {
+    step: '03',
+    title: 'Período de avaliação (1 mês)',
+    desc:
+      'Após a entrevista, o candidato passa por um período de avaliação de aproximadamente 1 mês, participando de operações para aferir postura, comprometimento e fit com a doutrina do clã.',
+  },
+  {
+    step: '04',
+    title: 'Decisão',
+    desc:
+      'Decisão final baseada em perfil comportamental, nível de comprometimento e alinhamento com os valores do Control. O preenchimento do formulário não garante aprovação.',
+  },
 ];
 
 const faq = [
@@ -33,12 +55,16 @@ const faq = [
     a: 'Nada. O Control é uma comunidade não-comercial.',
   },
   {
-    q: 'Quais idades vocês aceitam?',
-    a: 'A partir de 16 anos. Maturidade pesa mais que idade — avaliamos caso a caso.',
+    q: 'Qual a idade mínima?',
+    a: '18 anos. Maturidade pesa mais que idade — avaliamos caso a caso.',
   },
   {
     q: 'Tenho pouca experiência em jogos táticos. Posso aplicar?',
-    a: 'Sim. O que pesa é a vontade de aprender e o respeito à doutrina do clã.',
+    a: 'Sim. Contamos com instrução e orientação de integrantes com experiência militar — o que pesa é a vontade de aprender e o respeito à doutrina do clã.',
+  },
+  {
+    q: 'Quais horários posso propor para a entrevista?',
+    a: 'Dias de semana após 19h30 ou finais de semana em qualquer horário.',
   },
 ];
 ---
@@ -47,13 +73,38 @@ const faq = [
   <Hero
     variant="page"
     eyebrow="// Recrutamento aberto"
-    title="Junte-se ao Control"
-    subtitle="Quatro etapas, sem mistério. Selecionamos por compromisso, não por número."
+    title="Como funciona o recrutamento"
+    subtitle="O processo ocorre em etapas obrigatórias. Nenhuma delas é opcional."
     background={url('/gallery/ops-005.webp')}
   />
 
   <section class="mx-auto max-w-6xl px-6 py-20">
-    <SectionHeader eyebrow="Pré-requisitos" title="O que esperamos do candidato" />
+    <SectionHeader eyebrow="Fluxo" title="Quatro etapas até o ingresso" />
+    <ol class="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+      {
+        process.map((p) => (
+          <li class="flex flex-col gap-3 border border-border-subtle bg-surface p-6">
+            <span class="font-display text-4xl font-bold text-accent-tactical">{p.step}</span>
+            <h3 class="text-xl text-text-primary">{p.title}</h3>
+            <p class="text-sm leading-relaxed text-text-secondary">{p.desc}</p>
+          </li>
+        ))
+      }
+    </ol>
+
+    <p class="mt-6 border border-border-subtle bg-surface p-5 text-sm leading-relaxed text-text-secondary">
+      <strong class="text-accent-alert">⚠ Atenção:</strong> é obrigatório o preenchimento correto
+      dos contatos de <strong class="text-text-primary">WhatsApp</strong> e do
+      <strong class="text-text-primary">perfil na Steam</strong>, pois essas informações serão
+      utilizadas para o agendamento da entrevista. Formulários incompletos ou com dados
+      incorretos <strong class="text-text-primary">não serão considerados</strong>.
+    </p>
+  </section>
+
+  <SectionDivider label="Pré-requisitos" />
+
+  <section class="mx-auto max-w-6xl px-6 py-12">
+    <SectionHeader eyebrow="Critérios" title="O que esperamos do candidato" />
     <ul class="grid gap-px overflow-hidden border border-border-subtle bg-border-subtle md:grid-cols-2 lg:grid-cols-3">
       {
         requirements.map((r) => (
@@ -69,118 +120,55 @@ const faq = [
         ))
       }
     </ul>
+
+    <div class="mt-6 border-l-2 border-accent-tactical bg-surface p-5">
+      <p class="text-sm leading-relaxed text-text-secondary">
+        Contamos com instrução e orientação de integrantes com
+        <strong class="text-text-primary">experiência militar</strong>.
+      </p>
+    </div>
   </section>
 
-  <SectionDivider label="Processo" />
-
-  <section class="mx-auto max-w-6xl px-6 py-12">
-    <SectionHeader eyebrow="Fluxo" title="Quatro etapas até o ingresso" />
-    <ol class="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-      {
-        process.map((p) => (
-          <li class="flex flex-col gap-3 border border-border-subtle bg-surface p-6">
-            <span class="font-display text-4xl font-bold text-accent-tactical">{p.step}</span>
-            <h3 class="text-xl text-text-primary">{p.title}</h3>
-            <p class="text-sm leading-relaxed text-text-secondary">{p.desc}</p>
-          </li>
-        ))
-      }
-    </ol>
-  </section>
-
-  <SectionDivider label="Inscrição" />
+  <SectionDivider label="Aplicação" />
 
   <section class="mx-auto max-w-3xl px-6 py-12">
-    <SectionHeader eyebrow="Formulário" title="Aplicação oficial" />
-    <form
-      action={site.recruitForm.endpoint}
-      method="POST"
-      class="flex flex-col gap-5 border border-border-subtle bg-surface p-6 md:p-8"
-    >
-      <label class="flex flex-col gap-2">
-        <span class="font-mono text-[10px] uppercase tracking-widest text-accent-tactical">
-          // Nome de guerra
-        </span>
-        <input
-          type="text"
-          name="nickname"
-          required
-          class="border border-border-subtle bg-base px-4 py-3 text-text-primary outline-none transition-colors focus:border-accent-tactical"
-        />
-      </label>
-
-      <label class="flex flex-col gap-2">
-        <span class="font-mono text-[10px] uppercase tracking-widest text-accent-tactical">
-          // Idade
-        </span>
-        <input
-          type="number"
-          name="age"
-          min="16"
-          max="99"
-          required
-          class="border border-border-subtle bg-base px-4 py-3 text-text-primary outline-none transition-colors focus:border-accent-tactical"
-        />
-      </label>
-
-      <label class="flex flex-col gap-2">
-        <span class="font-mono text-[10px] uppercase tracking-widest text-accent-tactical">
-          // Discord (usuário)
-        </span>
-        <input
-          type="text"
-          name="discord"
-          required
-          class="border border-border-subtle bg-base px-4 py-3 text-text-primary outline-none transition-colors focus:border-accent-tactical"
-        />
-      </label>
-
-      <label class="flex flex-col gap-2">
-        <span class="font-mono text-[10px] uppercase tracking-widest text-accent-tactical">
-          // Jogo principal
-        </span>
-        <select
-          name="game"
-          required
-          class="border border-border-subtle bg-base px-4 py-3 text-text-primary outline-none transition-colors focus:border-accent-tactical"
-        >
-          <option value="">Selecione...</option>
-          <option value="squad">Squad</option>
-          <option value="arma3">Arma 3</option>
-          <option value="ambos">Ambos</option>
-        </select>
-      </label>
-
-      <label class="flex flex-col gap-2">
-        <span class="font-mono text-[10px] uppercase tracking-widest text-accent-tactical">
-          // Experiência tática (resumo)
-        </span>
-        <textarea
-          name="experience"
-          rows="5"
-          required
-          class="border border-border-subtle bg-base px-4 py-3 text-text-primary outline-none transition-colors focus:border-accent-tactical resize-y"
-        ></textarea>
-      </label>
-
-      <label class="flex flex-col gap-2">
-        <span class="font-mono text-[10px] uppercase tracking-widest text-accent-tactical">
-          // Por que o Control?
-        </span>
-        <textarea
-          name="motivation"
-          rows="4"
-          required
-          class="border border-border-subtle bg-base px-4 py-3 text-text-primary outline-none transition-colors focus:border-accent-tactical resize-y"
-        ></textarea>
-      </label>
-
-      <Button type="submit" variant="primary" size="lg">Enviar Aplicação</Button>
-
-      <p class="font-mono text-[10px] uppercase tracking-widest text-text-muted">
-        // Configurar endpoint Formspree em src/data/site.ts antes do deploy
+    <SectionHeader eyebrow="Formulário oficial" title="Inicie sua aplicação" align="center" />
+    <div class="flex flex-col items-center gap-6 border border-border-subtle bg-surface p-8 text-center">
+      <p class="max-w-xl text-text-secondary leading-relaxed">
+        A inscrição é feita por um formulário hospedado no
+        <strong class="text-text-primary">Google Forms</strong>. Preencha todos os campos com
+        atenção — esse é o primeiro filtro do processo.
       </p>
-    </form>
+      <Button href={formUrl} variant="primary" size="lg" external>
+        Iniciar recrutamento
+      </Button>
+      <p class="font-mono text-[10px] uppercase tracking-widest text-text-muted">
+        // O formulário abre em nova aba
+      </p>
+    </div>
+
+    <p class="mt-8 border-l-2 border-accent-tactical bg-surface p-5 text-sm italic leading-relaxed text-text-secondary">
+      O preenchimento do formulário <strong class="not-italic text-text-primary">não garante
+      aprovação</strong>. O Control prioriza qualidade, comprometimento e alinhamento com sua
+      identidade.
+    </p>
+  </section>
+
+  <SectionDivider label="Agendamento alternativo" />
+
+  <section class="mx-auto max-w-3xl px-6 py-12">
+    <SectionHeader eyebrow="Discord" title="Outra forma de agilizar" />
+    <p class="text-text-secondary leading-relaxed">
+      Após enviar o formulário, você pode acelerar o processo entrando no
+      <strong class="text-text-primary">Discord oficial do Control</strong> e avisando no canal
+      de mensagens que já concluiu o cadastro. A liderança fará o contato para combinar a
+      entrevista.
+    </p>
+    <div class="mt-5">
+      <Button href={site.social.discord} variant="secondary" size="md" external>
+        Entrar no Discord
+      </Button>
+    </div>
   </section>
 
   <SectionDivider label="FAQ" />

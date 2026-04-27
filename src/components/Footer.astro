@@ -12,7 +12,7 @@ const socialLinks = [
 ];
 ---
 
-<footer class="border-t border-border-subtle bg-base">
+<footer class="border-t border-border-subtle bg-base/85 backdrop-blur-sm">
   <div class="mx-auto grid max-w-6xl gap-10 px-6 py-12 md:grid-cols-3">
     <div>
       <div class="flex items-center gap-3">
@@ -68,14 +68,6 @@ const socialLinks = [
             </li>
           ))
         }
-        <li>
-          <a
-            href={`mailto:${site.social.email}`}
-            class="text-sm text-text-secondary transition-colors hover:text-accent-tactical"
-          >
-            {site.social.email}
-          </a>
-        </li>
       </ul>
     </div>
   </div>

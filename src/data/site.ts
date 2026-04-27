@@ -7,15 +7,15 @@ export const site = {
   locale: 'pt-BR',
 
   social: {
-    discord: 'https://discord.gg/controlclan',
-    instagram: 'https://www.instagram.com/controlclan/',
-    youtube: 'https://www.youtube.com/@controlclan',
-    whatsapp: 'https://chat.whatsapp.com/',
-    email: 'contato@controlclan.com',
+    discord: 'https://discord.gg/er4CVzeQDe',
+    instagram: 'https://www.instagram.com/controlteam.br/',
+    youtube: 'https://www.youtube.com/@ControlTeam-d7n',
+    whatsapp: 'https://chat.whatsapp.com/Ek0ww5XzKjKIM9eIVEAqf9',
   },
 
   recruitForm: {
-    endpoint: 'https://formspree.io/f/REPLACE_ME',
+    // Google Forms — formulário oficial de recrutamento
+    url: 'https://docs.google.com/forms/d/e/1FAIpQLSe8N3r64vMn4mFmhy6ug3Vs9wmOVO62s9WsZLvHvHVd5Drzug/viewform?usp=header',
   },
 
   nav: [

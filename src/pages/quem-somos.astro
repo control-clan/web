@@ -3,22 +3,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
 import SectionHeader from '../components/SectionHeader.astro';
 import SectionDivider from '../components/SectionDivider.astro';
+import InstagramFeed from '../components/InstagramFeed.astro';
+import MapBanner from '../components/MapBanner.astro';
+import Button from '../components/Button.astro';
 import { url } from '../lib/url';
-
-const ranks = [
-  { code: 'C-01', title: 'Comando', desc: 'Liderança estratégica, decisões operacionais e disciplina geral do clã.' },
-  { code: 'C-02', title: 'Squad Leader', desc: 'Coordena esquadrões em campo, comunica intenções e executa o plano.' },
-  { code: 'C-03', title: 'Operador', desc: 'Cumpre função em equipe — fuzileiro, atirador, médico, engenheiro.' },
-  { code: 'C-04', title: 'Recruta', desc: 'Em fase de avaliação, prova compatibilidade com a doutrina do clã.' },
-];
-
-const codeOfConduct = [
-  'Respeito a aliados, adversários e à comunidade.',
-  'Cadeia de comando respeitada, ego subordinado à missão.',
-  'Comunicação clara: sem rádio sujo, sem ruído.',
-  'Compromisso com horários e eventos agendados.',
-  'Postura profissional dentro e fora do servidor.',
-];
 ---
 
 <BaseLayout title="Quem Somos">
@@ -26,103 +14,84 @@ const codeOfConduct = [
     variant="page"
     eyebrow="// Dossiê"
     title="Quem Somos"
-    subtitle="Um clã focado em jogabilidade tática, disciplina e coordenação. Não somos os mais numerosos — somos os mais coesos."
+    subtitle="Estratégia, comunicação e controle do campo. Não somos os mais numerosos — somos os mais coesos."
     background={url('/gallery/ops-002.webp')}
   />
 
-  <section class="mx-auto max-w-4xl px-6 py-20">
-    <SectionHeader eyebrow="História" title="A origem do Control" />
-    <div class="prose prose-invert max-w-none space-y-5 text-text-secondary leading-relaxed">
+  <section class="mx-auto max-w-3xl px-6 py-20 text-center">
+    <SectionHeader eyebrow="História" title="A origem do Control" align="center" />
+    <div class="space-y-5 text-text-secondary leading-relaxed text-left md:text-center">
       <p>
-        O <strong class="text-text-primary">Control</strong> nasceu da insatisfação com servidores
-        públicos onde estratégia se perde no caos. Reunimos jogadores que queriam algo diferente:
-        operações com briefing, execução com plano e debrief com aprendizado.
+        O <strong class="text-text-primary">CONTROL</strong> nasceu em
+        <strong class="text-text-primary">2016</strong>, durante sessões de
+        <strong class="text-text-primary">GTA Online</strong>, quando um grupo de amigos começou
+        a jogar junto de forma organizada, estratégica e sempre priorizando trabalho em equipe.
       </p>
       <p>
-        Começamos pequenos, em poucas operações semanais. Com o tempo, estabelecemos doutrina,
-        hierarquia e processos. Hoje operamos com regularidade em <strong class="text-text-primary">Squad</strong>
-        e <strong class="text-text-primary">Arma 3</strong>, com membros distribuídos pelo Brasil
-        e parceiros em outros continentes.
+        Com o tempo, esse grupo foi se fortalecendo, novos jogadores se juntaram e o que era
+        apenas diversão virou um <strong class="text-text-primary">clã consolidado</strong>,
+        baseado em amizade, disciplina e coordenação.
       </p>
       <p>
-        Nossa proposta nunca mudou: <em class="text-accent-tactical not-italic">qualidade acima de quantidade</em>.
+        Ao longo dessa trajetória, jogamos diversos títulos juntos, com destaque para
+        <strong class="text-text-primary">Arma 3</strong>, até chegarmos ao nosso foco principal
+        hoje: <strong class="text-text-primary">Squad</strong>, onde estratégia, comunicação e
+        controle do campo fazem toda a diferença.
+      </p>
+      <p>
+        Gostamos de jogar novos lançamentos em conjunto, manter a equipe unida e sempre evoluindo.
+        <strong class="text-text-primary">Novos membros são bem-vindos</strong>, desde que
+        compartilhem da nossa visão: jogar de forma organizada, coordenada e comprometida com o time.
       </p>
     </div>
   </section>
 
-  <SectionDivider label="Hierarquia" />
+  <SectionDivider label="Presença" />
 
   <section class="mx-auto max-w-6xl px-6 py-12">
-    <SectionHeader eyebrow="Comando" title="Estrutura operacional" />
-    <div class="grid gap-px overflow-hidden border border-border-subtle bg-border-subtle md:grid-cols-2">
-      {
-        ranks.map((r) => (
-          <div class="flex flex-col gap-2 bg-surface p-6">
-            <span class="font-mono text-[10px] uppercase tracking-widest text-accent-tactical">
-              {r.code}
-            </span>
-            <h3 class="text-2xl text-text-primary">{r.title}</h3>
-            <p class="text-sm leading-relaxed text-text-secondary">{r.desc}</p>
-          </div>
-        ))
-      }
+    <SectionHeader
+      eyebrow="Mapa de operações"
+      title="Presença global do clã"
+      align="center"
+    />
+    <p class="mx-auto mb-8 max-w-2xl text-center text-text-secondary leading-relaxed">
+      Operadores distribuídos pelo Brasil e parceiros em outros continentes. Clique no vídeo
+      abaixo para visualizar a localização da unidade no mapa.
+    </p>
+
+    <MapBanner />
+
+    <p class="mt-4 text-center font-mono text-[10px] uppercase tracking-widest text-text-muted">
+      Hospedado no Google Maps · abre em nova aba
+    </p>
+  </section>
+
+  <SectionDivider label="Instagram" />
+
+  <section class="mx-auto max-w-6xl px-6 py-12">
+    <SectionHeader
+      eyebrow="@controlteam.br"
+      title="Últimos posts no Instagram"
+      align="center"
+    />
+    <p class="mx-auto mb-10 max-w-2xl text-center text-text-secondary leading-relaxed">
+      Bastidores, registros operacionais e cobertura visual das nossas missões.
+    </p>
+    <InstagramFeed />
+  </section>
+
+  <section class="relative mt-12 border-y border-border-subtle bg-surface">
+    <div class="grid-tactical-bg absolute inset-0 opacity-20" aria-hidden="true"></div>
+    <div class="relative mx-auto flex max-w-4xl flex-col items-center gap-6 px-6 py-16 text-center">
+      <span class="font-mono text-xs uppercase tracking-[0.4em] text-accent-tactical bracket-label">
+        Recrutamento aberto
+      </span>
+      <h2 class="text-3xl md:text-5xl text-text-primary">
+        Quer fazer parte da operação?
+      </h2>
+      <div class="mt-2 flex flex-wrap justify-center gap-4">
+        <Button href={url('/recrutamento')} variant="primary" size="lg">Iniciar recrutamento</Button>
+      </div>
     </div>
-  </section>
-
-  <SectionDivider label="Doutrina" />
-
-  <section class="mx-auto max-w-4xl px-6 py-12">
-    <SectionHeader eyebrow="Código de conduta" title="O que esperamos de cada operador" />
-    <ol class="space-y-4">
-      {
-        codeOfConduct.map((rule, i) => (
-          <li class="flex gap-4 border-l-2 border-accent-tactical bg-surface p-5">
-            <span class="font-mono text-sm text-accent-tactical">
-              {String(i + 1).padStart(2, '0')}
-            </span>
-            <p class="text-text-secondary">{rule}</p>
-          </li>
-        ))
-      }
-    </ol>
-  </section>
-
-  <section class="mx-auto max-w-6xl px-6 py-20">
-    <SectionHeader eyebrow="Galeria" title="Operações em andamento" />
-    {
-      (() => {
-        const gallery = [
-          { src: url('/gallery/ops-006.webp'), code: 'OPS-001', alt: 'Briefing tático' },
-          { src: url('/gallery/ops-001.webp'), code: 'OPS-002', alt: 'Setup operacional' },
-          { src: url('/games/squad.webp'), code: 'OPS-003', alt: 'Squad — briefing' },
-          { src: url('/games/arma3.webp'), code: 'OPS-004', alt: 'Arma 3 — formação' },
-          { src: url('/gallery/ops-003.webp'), code: 'OPS-005', alt: 'Brand mark' },
-          { src: url('/gallery/ops-004.webp'), code: 'OPS-006', alt: 'Brand mark' },
-        ];
-        return (
-          <div class="grid gap-2 md:grid-cols-3">
-            {gallery.map((item) => (
-              <figure class="group relative aspect-[4/3] overflow-hidden border border-border-subtle bg-surface">
-                <img
-                  src={item.src}
-                  alt={item.alt}
-                  loading="lazy"
-                  decoding="async"
-                  class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-                <figcaption class="absolute inset-x-0 bottom-0 flex items-center justify-between border-t border-border-subtle bg-base/70 px-3 py-2 backdrop-blur-sm">
-                  <span class="font-mono text-[10px] uppercase tracking-widest text-accent-tactical">
-                    {item.code}
-                  </span>
-                  <span class="font-mono text-[10px] uppercase tracking-widest text-text-secondary">
-                    {item.alt}
-                  </span>
-                </figcaption>
-              </figure>
-            ))}
-          </div>
-        );
-      })()
-    }
   </section>
 </BaseLayout>

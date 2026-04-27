@@ -1,9 +1,21 @@
 ---
-const stats = [
-  { code: '01', label: 'Operações ativas', value: 'SQUAD · ARMA 3' },
-  { code: '02', label: 'Postura', value: 'CONVITE + PROVA' },
-  { code: '03', label: 'Comunicação', value: 'DISCORD · TS3' },
-  { code: '04', label: 'Tempo de operação', value: 'CONTÍNUO' },
+import { site } from '../data/site';
+
+type Stat = {
+  code: string;
+  label: string;
+  value: string;
+  href?: string;
+};
+
+const stats: Stat[] = [
+  { code: '01', label: 'Games ativos', value: 'SQUAD · ARMA 3 · BELLUM' },
+  { code: '02', label: 'Canal de comunicação', value: 'DISCORD', href: site.social.discord },
+  {
+    code: '03',
+    label: 'Horário de operação',
+    value: 'SEG–SEX APÓS 17:00 · FIM DE SEMANA INTEGRAL',
+  },
 ];
 ---
 
@@ -17,7 +29,7 @@ const stats = [
       Em operação
     </span>
   </div>
-  <div class="grid grid-cols-2 gap-px bg-border-subtle md:grid-cols-4">
+  <div class="grid grid-cols-1 gap-px bg-border-subtle md:grid-cols-3">
     {
       stats.map((s) => (
         <div class="flex flex-col gap-2 bg-surface p-6">
@@ -25,9 +37,26 @@ const stats = [
           <span class="font-mono text-[10px] uppercase tracking-widest text-text-secondary">
             {s.label}
           </span>
-          <span class="font-display text-lg font-semibold uppercase tracking-wide text-text-primary">
-            {s.value}
-          </span>
+          {s.href ? (
+            <a
+              href={s.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="group inline-flex items-center gap-2 font-display text-lg font-semibold uppercase tracking-wide text-text-primary transition-colors hover:text-accent-tactical"
+            >
+              <span>{s.value}</span>
+              <span
+                class="font-mono text-[10px] text-accent-tactical opacity-70 transition-opacity group-hover:opacity-100"
+                aria-hidden="true"
+              >
+                ↗
+              </span>
+            </a>
+          ) : (
+            <span class="font-display text-lg font-semibold uppercase tracking-wide text-text-primary">
+              {s.value}
+            </span>
+          )}
         </div>
       ))
     }

@@ -6,8 +6,7 @@ import tailwind from '@tailwindcss/vite';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://control-clan.github.io',
-  base: '/web/',
+  site: 'https://controlteam.net',
   trailingSlash: 'ignore',
   integrations: [mdx(), sitemap()],
   vite: {
